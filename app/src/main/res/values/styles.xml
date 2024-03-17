@@ -1,0 +1,14 @@
+<resources>
+    <style name="DetailContact.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textSize">20sp</item> <!-- Use sp for text sizes -->
+    </style>
+
+    <style name="DetailContact.Button" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
