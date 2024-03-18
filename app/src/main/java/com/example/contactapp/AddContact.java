@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.contactapp.databinding.ActivityDetailContactBinding;
 
+import java.util.ArrayList;
+
 public class AddContact extends AppCompatActivity {
+    private Contact contact;
     private ContactDAO contactDAO;
     private ActivityDetailContactBinding binding;
     @Override
@@ -41,11 +44,14 @@ public class AddContact extends AppCompatActivity {
                         String name = binding.tvName.getText().toString();
                         String phone = binding.tvPhone.getText().toString();
                         String email = binding.tvEmail.getText().toString();
-                        contactDAO.insertAll(new Contact(name, phone, email));
+                        contact = new Contact(name, phone, email);
+                        contactDAO.insertAll(contact);
+                        final ArrayList<Contact> contacts = new ArrayList<>(contactDAO.getAll());
                         MainActivity.getInstance().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                MainActivity.getInstance().contactList.add(new Contact(name, phone, email));
+                                MainActivity.getInstance().contactList.clear();
+                                MainActivity.getInstance().contactList.addAll(contacts);
                                 MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
                                 finish();
                             }
