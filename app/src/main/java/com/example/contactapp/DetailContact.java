@@ -49,8 +49,13 @@ public class DetailContact extends AppCompatActivity {
                         String phone = binding.tvPhone.getText().toString();
                         String email = binding.tvEmail.getText().toString();
                         contactDAO.updateContact(id, name, phone, email);
-                        MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
-                        finish();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
+                                finish();
+                            }
+                        });
                     }
                 });
             }
@@ -63,8 +68,14 @@ public class DetailContact extends AppCompatActivity {
                     @Override
                     public void run() {
                         contactDAO.delete(contact);
-                        MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
-                        finish();
+                        MainActivity.getInstance().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MainActivity.getInstance().contactList.remove(contact);
+                                MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
+                                finish();
+                            }
+                        });
                     }
                 });
             }

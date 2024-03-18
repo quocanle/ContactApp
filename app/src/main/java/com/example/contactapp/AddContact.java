@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.contactapp.databinding.ActivityDetailContactBinding;
 
 public class AddContact extends AppCompatActivity {
-    private Contact contact;
     private ContactDAO contactDAO;
     private ActivityDetailContactBinding binding;
     @Override
@@ -43,8 +42,14 @@ public class AddContact extends AppCompatActivity {
                         String phone = binding.tvPhone.getText().toString();
                         String email = binding.tvEmail.getText().toString();
                         contactDAO.insertAll(new Contact(name, phone, email));
-                        MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
-                        finish();
+                        MainActivity.getInstance().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MainActivity.getInstance().contactList.add(new Contact(name, phone, email));
+                                MainActivity.getInstance().contactAdapter.notifyDataSetChanged();
+                                finish();
+                            }
+                        });
                     }
                 });
 

@@ -61,10 +61,15 @@ public class MainActivity extends AppCompatActivity {
 //                contactDAO.insertAll(new Contact("Thảo Vy Huỳnh Hồng", "0121", "thaovyhuynhhong@vnuk.edu.vn"));
 //                contactDAO.insertAll(new Contact("Khánh Trang Nguyễn", "0122", "khanhtrangnguyen@vnuk.edu.vn"));
 
-                for (Contact contact : contactDAO.getAll()) {
-                    contactList.add(contact);
-                }
-                contactAdapter.notifyDataSetChanged();
+                final ArrayList<Contact> contacts = new ArrayList<>(contactDAO.getAll());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        contactList.clear();
+                        contactList.addAll(contacts);
+                        contactAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
 
